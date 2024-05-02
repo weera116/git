@@ -767,7 +767,7 @@ int reftable_addition_add(struct reftable_addition *add,
 	tab_fd = get_tempfile_fd(tab_file);
 
 	wr = reftable_new_writer(reftable_fd_write, reftable_fd_flush, &tab_fd,
-				 &add->stack->opts);
+				 add->stack->opts);
 	err = write_table(wr, arg);
 	if (err < 0)
 		goto done;
@@ -861,7 +861,7 @@ static int stack_compact_locked(struct reftable_stack *st,
 	}
 
 	wr = reftable_new_writer(reftable_fd_write, reftable_fd_flush,
-				 &tab_fd, &st->opts);
+				 &tab_fd, st->opts);
 	err = stack_write_compact(st, wr, first, last, config);
 	if (err < 0)
 		goto done;
