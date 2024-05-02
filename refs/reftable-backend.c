@@ -252,6 +252,11 @@ static int reftable_be_config(const char *var, const char *value,
 	} else if (!strcmp(var, "reftable.indexobjects")) {
 		opts->skip_index_objects = !git_config_bool(var, value);
 		return 0;
+	} else if (!strcmp(var, "reftable.geometricfactor")) {
+		unsigned long factor = git_config_ulong(var, value, ctx->kvi);
+		if (factor > UINT8_MAX)
+			die("reftable geometric factor cannot exceed %u", (unsigned)UINT8_MAX);
+		opts->auto_compaction_factor = factor;
 	}
 
 	return 0;
