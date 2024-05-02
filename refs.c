@@ -874,6 +874,8 @@ int is_root_ref(struct ref_store *refs, const char *refname)
 
 	if (!is_root_ref_syntax(refname))
 		return 0;
+	if (is_headref(refs, refname))
+		return 1;
 
 	if (ends_with(refname, "_HEAD")) {
 		refs_resolve_ref_unsafe(refs, refname,
